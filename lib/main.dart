@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/configurations/dependency_configuration.dart';
+import 'package:todo/gui/todo_home_page.dart';
+import 'package:todo/gui/todo_home_page_view_model.dart';
 import 'package:todo/theme/custom_theme.dart';
 
 void main() {
+  configureDependencies();
   runApp(MyApp());
 }
 
@@ -12,13 +17,9 @@ class MyApp extends StatelessWidget {
       title: 'Todo application',
       debugShowCheckedModeBanner: false,
       theme: CustomTheme.lightTheme,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Todo application'),
-        ),
-        body: Center(
-          child: Text('Todo Home Page'),
-        ),
+      home: ChangeNotifierProvider(
+        create: (_) => TodoHomePageViewModel(),
+        child: TodoHomePage(),
       ),
     );
   }
