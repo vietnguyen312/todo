@@ -8,7 +8,7 @@ import 'package:todo/services/todo_repository_impl.dart';
 void configureDependencies() => $initGetIt(GetIt.instance);
 
 @module
-abstract class registerDependencies {
+abstract class RegisterDependencies {
 
   @LazySingleton(as: TodoRepository)
   TodoRepositoryImpl get todoRepository;
