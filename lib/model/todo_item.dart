@@ -1,6 +1,9 @@
+import 'package:uuid/uuid.dart';
+
 class TodoItem {
-  String? name;
+  String uuid = Uuid().v1();
+  late String name;
   bool isCompleted = false;
 
-  TodoItem({this.name, this.isCompleted = false});
+  TodoItem({required this.name, this.isCompleted = false});
 }

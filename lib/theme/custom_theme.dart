@@ -10,5 +10,6 @@ class CustomTheme {
 }
 
 class AppColors {
-  static Color red = Color.fromARGB(255, 220, 76, 65);
+  static const red = Color.fromARGB(255, 220, 76, 65);
+  static const veryLightGrey = Color(0x55999999);
 }
