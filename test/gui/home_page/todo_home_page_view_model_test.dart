@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:todo/gui/todo_home_page_view_model.dart';
+import 'package:todo/gui/home_page/todo_home_page_view_model.dart';
 import 'package:todo/model/todo_item.dart';
 import 'package:todo/services/todo_repository.dart';
 

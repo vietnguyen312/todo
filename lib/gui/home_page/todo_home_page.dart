@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/gui/todo_home_page_view_model.dart';
+import 'package:todo/gui/home_page/todo_home_page_view_model.dart';
 import 'package:todo/model/todo_item.dart';
 import 'package:todo/theme/custom_theme.dart';
 
@@ -49,6 +49,13 @@ class _TodoHomePageState extends State<TodoHomePage> {
         ],
       ),
       body: _todoListView(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+        },
+        child: const Icon(Icons.add),
+        backgroundColor: Theme.of(context).primaryColor,
+        mini: true,
+      ),
     );
   }
 
