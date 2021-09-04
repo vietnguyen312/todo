@@ -11,6 +11,10 @@ class TodoHomePageViewModel with ChangeNotifier {
 
   List<TodoItem> get todoItems => UnmodifiableListView(_todoItems ?? []);
 
+  List<TodoItem> get incompleteTodoItems => UnmodifiableListView(_todoItems?.where((item) => !item.isCompleted) ?? []);
+
+  List<TodoItem> get completeTodoItems => UnmodifiableListView(_todoItems?.where((item) => item.isCompleted) ?? []);
+
   TodoHomePageViewModel();
 
   Future<void> load() async {

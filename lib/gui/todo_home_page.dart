@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/gui/todo_home_page_view_model.dart';
 import 'package:todo/model/todo_item.dart';
@@ -11,6 +12,8 @@ class TodoHomePage extends StatefulWidget {
 }
 
 class _TodoHomePageState extends State<TodoHomePage> {
+  TodoBottomNavigationTab _selectedBottomNavigationTab = TodoBottomNavigationTab.all;
+
   @override
   void initState() {
     super.initState();
@@ -21,16 +24,57 @@ class _TodoHomePageState extends State<TodoHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Todo application'),
+        title: Text(AppLocalizations.of(context)!.appTitle),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedBottomNavigationTab.index,
+        onTap: (index) {
+          setState(() {
+            _selectedBottomNavigationTab = TodoBottomNavigationTab.values[index];
+          });
+        },
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: _bottomNavigationIcon('assets/images/home.png'),
+            label: AppLocalizations.of(context)!.allItems,
+          ),
+          BottomNavigationBarItem(
+            icon: _bottomNavigationIcon('assets/images/task.png'),
+            label: AppLocalizations.of(context)!.inCompleteItems,
+          ),
+          BottomNavigationBarItem(
+            icon: _bottomNavigationIcon('assets/images/task-completed.png'),
+            label: AppLocalizations.of(context)!.completeItems,
+          ),
+        ],
       ),
       body: _todoListView(),
+    );
+  }
+
+  Widget _bottomNavigationIcon(String imageAsset) {
+    return Image.asset(
+      imageAsset,
+      width: 24,
+      height: 24,
     );
   }
 
   Widget _todoListView() {
     return Consumer<TodoHomePageViewModel>(
       builder: (_, viewModel, __) {
-        final items = viewModel.todoItems;
+        late List<TodoItem> items;
+        switch(_selectedBottomNavigationTab) {
+          case TodoBottomNavigationTab.all:
+            items = viewModel.todoItems;
+            break;
+          case TodoBottomNavigationTab.incomplete:
+            items = viewModel.incompleteTodoItems;
+            break;
+          case TodoBottomNavigationTab.complete:
+            items = viewModel.completeTodoItems;
+            break;
+        }
         return ListView.separated(
           itemCount: items.length,
           separatorBuilder: (_, index) {
@@ -80,4 +124,10 @@ class TodoItemWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+enum TodoBottomNavigationTab {
+  all,
+  incomplete,
+  complete
 }

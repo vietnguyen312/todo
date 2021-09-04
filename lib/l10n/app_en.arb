@@ -1,5 +1,10 @@
 {
     "appTitle": "Todo App",
-    "@appTitle": {
-    }
+    "@appTitle": {},
+    "allItems": "All items",
+    "@allItems": {},
+    "inCompleteItems": "Incomplete items",
+    "@inCompleteItems": {},
+    "completeItems": "Complete items",
+    "@completeItems": {}
 }
