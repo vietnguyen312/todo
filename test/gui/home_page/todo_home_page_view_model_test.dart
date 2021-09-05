@@ -42,13 +42,7 @@ void main() {
 
   group('Test loading items', () {
     setUp(() {
-      var repository = MockTodoRepository();
-      when(repository.getTodoItems()).thenAnswer((_) async =>
-      [
-        TodoItem(name: 'First item', isCompleted: false),
-        TodoItem(name: 'second item', isCompleted: true),
-        TodoItem(name: 'Third item', isCompleted: false),
-      ]);
+      MockTodoRepository repository = _mockTodoRepositoryWithDataTemplate();
       GetIt.instance.registerSingleton<TodoRepository>(repository);
     });
 
@@ -77,4 +71,51 @@ void main() {
       GetIt.instance.unregister<TodoRepository>();
     });
   });
+
+  group('Test adding new todo item', () {
+    setUp(() {
+      MockTodoRepository repository = _mockTodoRepositoryWithDataTemplate();
+      GetIt.instance.registerSingleton<TodoRepository>(repository);
+    });
+
+    test('Newest item should be placed on top of all items list', () async {
+      var viewModel = TodoHomePageViewModel();
+      await viewModel.load();
+      expect(viewModel.todoItems.length, 3);
+      viewModel.insertTodoItem(TodoItem(name: 'Newest todo'));
+      expect(viewModel.todoItems.length, 4);
+      expect(viewModel.todoItems.first.name, 'Newest todo');
+    });
+
+    test('Newest item should be placed on top of incomplete items list', () async {
+      var viewModel = TodoHomePageViewModel();
+      await viewModel.load();
+      expect(viewModel.incompleteTodoItems.length, 2);
+      viewModel.insertTodoItem(TodoItem(name: 'Newest todo'));
+      expect(viewModel.incompleteTodoItems.length, 3);
+      expect(viewModel.incompleteTodoItems.first.name, 'Newest todo');
+    });
+
+    test('Newest item should not be added to complete items list', () async {
+      var viewModel = TodoHomePageViewModel();
+      await viewModel.load();
+      expect(viewModel.completeTodoItems.length, 1);
+      viewModel.insertTodoItem(TodoItem(name: 'Newest todo'));
+      expect(viewModel.completeTodoItems.length, 1);
+    });
+
+    tearDown(() {
+      GetIt.instance.unregister<TodoRepository>();
+    });
+  });
+}
+
+MockTodoRepository _mockTodoRepositoryWithDataTemplate() {
+  var repository = MockTodoRepository();
+  when(repository.getTodoItems()).thenAnswer((_) async => [
+        TodoItem(name: 'First item', isCompleted: false),
+        TodoItem(name: 'second item', isCompleted: true),
+        TodoItem(name: 'Third item', isCompleted: false),
+      ]);
+  return repository;
 }

@@ -3,8 +3,14 @@ import 'package:flutter/material.dart';
 class CustomTheme {
   static ThemeData get lightTheme {
     return ThemeData(
-        primaryColor: AppColors.red,
-        scaffoldBackgroundColor: Colors.white,
+      primaryColor: AppColors.red,
+      scaffoldBackgroundColor: Colors.white,
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderSide: const BorderSide(color: AppColors.veryLightGrey, width: 1),
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
     );
   }
 }

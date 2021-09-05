@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/gui/home_page/todo_home_page_view_model.dart';
+import 'package:todo/gui/new_todo_item/new_todo_item_page.dart';
+import 'package:todo/gui/new_todo_item/new_todo_item_view_model.dart';
 import 'package:todo/model/todo_item.dart';
 import 'package:todo/theme/custom_theme.dart';
 
@@ -50,8 +52,7 @@ class _TodoHomePageState extends State<TodoHomePage> {
       ),
       body: _todoListView(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-        },
+        onPressed: _navigateToNewTodoPage,
         child: const Icon(Icons.add),
         backgroundColor: Theme.of(context).primaryColor,
         mini: true,
@@ -98,6 +99,33 @@ class _TodoHomePageState extends State<TodoHomePage> {
         );
       },
     );
+  }
+
+  Future _navigateToNewTodoPage() async {
+    await Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider<NewTodoItemViewModel>(
+            create: (_) => NewTodoItemViewModel(),
+          ),
+          ChangeNotifierProxyProvider<NewTodoItemViewModel, ChangeNotifier>(
+            lazy: false,
+            create: (_) {
+              return ChangeNotifier();
+            },
+            update: (_, newTodoViewModel, changeNotifier) {
+              if (newTodoViewModel.todoItem != null) {
+                Future.microtask(
+                  () => context.read<TodoHomePageViewModel>().insertTodoItem(newTodoViewModel.todoItem!),
+                );
+              }
+              return changeNotifier!;
+            },
+          ),
+        ],
+        child: NewToDoItemPage(),
+      ),
+    ));
   }
 }
 

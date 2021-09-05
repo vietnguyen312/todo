@@ -18,4 +18,9 @@ class TodoRepositoryImpl extends TodoRepository {
   Future updateTodoItem(TodoItem item) {
     return Future.value(Void);
   }
+
+  @override
+  Future<TodoItem> add(String todo) {
+    return Future.value(TodoItem(name: todo));
+  }
 }

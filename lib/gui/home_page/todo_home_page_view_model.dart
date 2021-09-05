@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:todo/configurations/service_configuration.dart';
 import 'package:todo/model/todo_item.dart';
@@ -19,6 +20,12 @@ class TodoHomePageViewModel with ChangeNotifier {
 
   Future<void> load() async {
     _todoItems = await repository.getTodoItems();
+    notifyListeners();
+  }
+
+  void insertTodoItem(TodoItem todoItem) {
+    _todoItems ??= [];
+    _todoItems!.insert(0, todoItem);
     notifyListeners();
   }
 

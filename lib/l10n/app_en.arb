@@ -6,5 +6,9 @@
     "inCompleteItems": "Incomplete items",
     "@inCompleteItems": {},
     "completeItems": "Complete items",
-    "@completeItems": {}
+    "@completeItems": {},
+    "enterTaskHint": "Enter a new task",
+    "@enterTaskHint": {},
+    "save": "Save",
+    "@save": {}
 }
