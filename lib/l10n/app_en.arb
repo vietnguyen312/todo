@@ -10,5 +10,9 @@
     "enterTaskHint": "Enter a new task",
     "@enterTaskHint": {},
     "save": "Save",
-    "@save": {}
+    "@save": {},
+    "noCompletedTodoItems": "There is no completed task",
+    "@noCompletedTodoItems": {},
+    "noTodoItems": "There is no task to do now,\nClick on Plus(+) button below to create a new one",
+    "@noTodoItems": {}
 }

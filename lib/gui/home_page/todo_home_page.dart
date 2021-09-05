@@ -50,7 +50,7 @@ class _TodoHomePageState extends State<TodoHomePage> {
           ),
         ],
       ),
-      body: _todoListView(),
+      body: _todoItemsContent(),
       floatingActionButton: _selectedBottomNavigationTab == TodoBottomNavigationTab.complete
           ? null
           : FloatingActionButton(
@@ -70,7 +70,7 @@ class _TodoHomePageState extends State<TodoHomePage> {
     );
   }
 
-  Widget _todoListView() {
+  Widget _todoItemsContent() {
     return Consumer<TodoHomePageViewModel>(
       builder: (_, viewModel, __) {
         late List<TodoItem> items;
@@ -85,21 +85,44 @@ class _TodoHomePageState extends State<TodoHomePage> {
             items = viewModel.completeTodoItems;
             break;
         }
-        return ListView.separated(
-          itemCount: items.length,
-          separatorBuilder: (_, index) {
-            return Container(
-              height: 0.5,
-              color: AppColors.veryLightGrey,
-              margin: EdgeInsets.symmetric(horizontal: 16),
-            );
-          },
-          itemBuilder: (_, index) => Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: TodoItemWidget(items[index]),
-          ),
+        if (items.isEmpty) {
+          return _noTodoItemsContent();
+        } else {
+          return _todoListView(items);
+        }
+      },
+    );
+  }
+
+  Widget _noTodoItemsContent() {
+    final noContentText = _selectedBottomNavigationTab == TodoBottomNavigationTab.complete
+        ? AppLocalizations.of(context)!.noCompletedTodoItems
+        : AppLocalizations.of(context)!.noTodoItems;
+    return Container(
+      alignment: Alignment.center,
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      child: Text(
+        noContentText,
+        textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.headline6,
+      ),
+    );
+  }
+
+  ListView _todoListView(List<TodoItem> items) {
+    return ListView.separated(
+      itemCount: items.length,
+      separatorBuilder: (_, index) {
+        return Container(
+          height: 0.5,
+          color: AppColors.veryLightGrey,
+          margin: EdgeInsets.symmetric(horizontal: 16),
         );
       },
+      itemBuilder: (_, index) => Container(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: TodoItemWidget(items[index]),
+      ),
     );
   }
 

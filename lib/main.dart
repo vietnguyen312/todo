@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
       debugShowCheckedModeBanner: false,
-      theme: CustomTheme.lightTheme,
+      theme: CustomTheme.lightTheme(context),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: ChangeNotifierProvider(
