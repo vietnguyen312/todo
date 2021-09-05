@@ -57,7 +57,6 @@ class _TodoHomePageState extends State<TodoHomePage> {
               onPressed: _navigateToNewTodoPage,
               child: const Icon(Icons.add),
               backgroundColor: Theme.of(context).primaryColor,
-              mini: true,
             ),
     );
   }
