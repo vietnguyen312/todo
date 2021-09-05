@@ -58,8 +58,8 @@ class _NewTodoItemPageState extends State<NewToDoItemPage> {
             Container(
               alignment: Alignment.topRight,
               child: TextButton(
-                onPressed: !_hasEnteredTodo ? null : () {
-                  context.read<NewTodoItemViewModel>().add(_newTaskTextEditingController.text);
+                onPressed: !_hasEnteredTodo ? null : () async {
+                  await context.read<NewTodoItemViewModel>().add(_newTaskTextEditingController.text);
                   Navigator.pop(context);
                 },
                 child: Text(AppLocalizations.of(context)!.save),
