@@ -51,12 +51,14 @@ class _TodoHomePageState extends State<TodoHomePage> {
         ],
       ),
       body: _todoListView(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _navigateToNewTodoPage,
-        child: const Icon(Icons.add),
-        backgroundColor: Theme.of(context).primaryColor,
-        mini: true,
-      ),
+      floatingActionButton: _selectedBottomNavigationTab == TodoBottomNavigationTab.complete
+          ? null
+          : FloatingActionButton(
+              onPressed: _navigateToNewTodoPage,
+              child: const Icon(Icons.add),
+              backgroundColor: Theme.of(context).primaryColor,
+              mini: true,
+            ),
     );
   }
 
